@@ -1,15 +1,18 @@
 package io.github.doflavio;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 
 public class CalculadoraTeste {
 
     Calculadora calculadora;
     int numero1 = 10, numero2 = 5;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         calculadora = new Calculadora();
     }
@@ -75,7 +78,7 @@ public class CalculadoraTeste {
 
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void naoDeveSomarNumerosNegativos(){
         Calculadora calculadora = new Calculadora();
 
@@ -83,11 +86,13 @@ public class CalculadoraTeste {
         int num1 = -10, num2 = 5;
 
         //Execução
-        int resultado = calculadora.somar(num1,num2);
+        org.junit.jupiter.api.Assertions.assertThrows(
+                RuntimeException.class,
+                () -> calculadora.somar(num1,num2));
 
     }
 
-    @Test(expected = ArithmeticException.class)
+    @Test
     public void naoDeveDividirPorZero(){
         Calculadora calculadora = new Calculadora();
 
@@ -95,7 +100,9 @@ public class CalculadoraTeste {
         int num1 = 10, num2 = 0;
 
         //Execução
-        float resultado = calculadora.dividir(num1,num2);
+        org.junit.jupiter.api.Assertions.assertThrows(
+                ArithmeticException.class,
+                () -> calculadora.dividir(num1,num2));
 
     }
 }

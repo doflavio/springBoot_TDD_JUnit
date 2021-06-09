@@ -1,11 +1,14 @@
 package io.github.doflavio;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 
 public class CadastroPessoaTest {
 
     @Test
+    @DisplayName("Deve criar o Cadastro de pessoas")
     public void deveriaCriarOCadastraoDePessoas() {
         //Cenário
         CadastroPessoas cadastro = new CadastroPessoas();
@@ -15,6 +18,7 @@ public class CadastroPessoaTest {
     }
 
     @Test
+    @DisplayName("Deve adicionar uma pessoa")
     public void deveAdicionarUmaPessoa(){
         //Cenário
         CadastroPessoas cadastroPessoas = new CadastroPessoas();
@@ -34,17 +38,21 @@ public class CadastroPessoaTest {
 
     }
 
-    @Test(expected = PessoaSemNomeException.class)
+    @Test
+    @DisplayName("Não deve adicionar pessoa com nome vazio")
     public void naoDeveAdicionarPessoaComNomeVazio() {
         //Cenário
         CadastroPessoas cadastroPessoas = new CadastroPessoas();
         Pessoa pessoa = new Pessoa();
 
         //Execução
-        cadastroPessoas.adicionar(pessoa);
+        org.junit.jupiter.api.Assertions.assertThrows(
+                PessoaSemNomeException.class,
+                () -> cadastroPessoas.adicionar(pessoa));
     }
 
     @Test
+    @DisplayName("Deve remover uma pessoa")
     public void deveRemoverUmaPessoa(){
         //Cenário
         CadastroPessoas cadastroPessoas = new CadastroPessoas();
@@ -59,13 +67,18 @@ public class CadastroPessoaTest {
         Assertions.assertThat(cadastroPessoas.getPessoas()).isEmpty();
     }
 
-    @Test(expected = CadastroVazioException.class)
+    @Test
+    @DisplayName("Deve lançar erro ao tentar remover pessoal inexistente")
     public void deveLancarErroAoTentarRemoverPessoaInexistente() {
         //Cenário
         CadastroPessoas cadastroPessoas = new CadastroPessoas();
         Pessoa pessoa = new Pessoa();
 
         //execução
-        cadastroPessoas.remover(pessoa);
+
+
+        org.junit.jupiter.api.Assertions.assertThrows(
+                CadastroVazioException.class,
+                () -> cadastroPessoas.remover(pessoa));
     }
 }
